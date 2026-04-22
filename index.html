@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ellen Luxe Hairs - Luxury Hair Care & Styling</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="ellen-luxe-logo.png" alt="Ellen Luxe Logo">
+                </a>
+            </div>
+
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search products, styles, colors..." id="searchInput">
+                <button class="search-button" id="searchButton">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="accessories.html">Accessories</a></li>
+                    <li><a href="sale.html" class="sale-link">Sale</a></li>
+                    <li><a href="policy.html">Policy</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-controls">
+                <a href="cart.html" class="cart-anchor">
+                    <div class="cart-icon-wrapper">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <path d="M16 10a4 4 0 0 1-8 0"></path>
+                        </svg>
+                        <span class="cart-counter" id="cartCount">0</span>
+                    </div>
+                </a>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-carousel">
+  <div class="carousel-container" style="position:relative; overflow:hidden;">
+ 
+    <div class="carousel-track" id="carouselTrack">
+ 
+      <!-- SLIDE 1 — Video (always first) -->
+      <div class="carousel-slide video" data-type="video">
+        <video
+          src="grok-video-a1d9dfc9-d10a-4385-8e1b-b68bef031f58 (1).mp4"
+          autoplay muted loop playsinline
+          preload="auto">
+        </video>
+        <div class="slide-content">
+          <h2 class="slide-title">Discover Your Perfect Look</h2>
+          <p class="slide-text">Premium hair care products for every style</p>
+          <a href="#products" class="slide-cta">Shop Now</a>
+        </div>
+      </div>
+ 
+      <!-- SLIDE 2 — Image -->
+      <!--
+        Replace "carousel-image-2.jpg" with your actual image filename.
+        e.g. src="Image_fx (17).png"  (just copy the file into your project folder)
+      -->
+      <div class="carousel-slide image-slide" data-type="image">
+        <img src="kcurly.png" alt="Expertly Crafted Human Hair">
+        <div class="slide-content">
+          <h2 class="slide-title">Expertly Crafted</h2>
+          <p class="slide-text">100% Human Hair Solutions</p>
+          <a href="#products" class="slide-cta">Explore</a>
+        </div>
+      </div>
+ 
+      <!-- SLIDE 3 — Image -->
+      <!-- Replace "carousel-image-3.jpg" with your actual image -->
+      <div class="carousel-slide image-slide" data-type="image">
+        <img src="bdmodel.png" alt="Effortless Everyday Glam">
+        <div class="slide-content">
+          <h2 class="slide-title">Effortless Everyday Glam</h2>
+          <p class="slide-text">Reusable · Long-lasting · Ready in seconds</p>
+          <a href="#products" class="slide-cta">Shop the Collection</a>
+        </div>
+      </div>
+ 
+      <!-- SLIDE 4 — Image -->
+      <!-- Replace "carousel-image-4.jpg" with your actual image -->
+      <div class="carousel-slide image-slide" data-type="image">
+        <img src="Image_fx (17).png" alt="Soft Luxury Ponytails">
+        <div class="slide-content">
+          <h2 class="slide-title">Wear Your Confidence</h2>
+          <p class="slide-text">Signature styles for every occasion</p>
+          <a href="#products" class="slide-cta">View Ponytails</a>
+        </div>
+      </div>
+ 
+    </div><!-- /carousel-track -->
+ 
+    <button class="carousel-control prev" id="prevSlide">&#10094;</button>
+    <button class="carousel-control next" id="nextSlide">&#10095;</button>
+    <div class="carousel-indicators" id="carouselIndicators"></div>
+ 
+  </div><!-- /carousel-container -->
+</section>
+
+
+        <p id="noResults" style="display:none; text-align:center; margin-top:20px;">
+            No products found. Try searching for hair styles...
+        </p>
+
+  <!-- ═══════════════════════════════════════
+     FEATURED PONYTAILS SECTION
+══════════════════════════════════════════ -->
+<section class="products-section" id="products">
+ 
+  <div class="section-header">
+    <p class="section-eyebrow">Signature Collection</p>
+    <h2 class="section-title">Featured <em>Ponytails</em></h2>
+    <div class="section-rule"></div>
+  </div>
+ 
+  <p id="noResults" style="display:none; text-align:center; color:#888; font-size:0.85rem; letter-spacing:0.1em; margin-top:20px;">
+    No products found.
+  </p>
+ 
+  <div class="products-grid">
+ 
+    <!-- ── CARD 1: Kinky Straight ── -->
+    <div class="product-card" onclick="openModal('kinky-straight')">
+      <div class="card-image-wrap">
+        <img src="kinkystraightmain.jpeg" alt="The Muse: Kinky Straight Ponytail">
+        <div class="card-badge">100% Human Hair</div>
+        <div class="card-overlay"></div>
+        <button class="card-view-btn" tabindex="-1">View Details</button>
+      </div>
+      <div class="card-info">
+        <p class="card-label">The Muse</p>
+        <h3 class="card-name">Kinky Straight Ponytail</h3>
+        <p class="card-tagline">Soft, natural blow-out finish that blends effortlessly</p>
+        <div class="card-footer">
+          <span class="card-price">€74.99</span>
+          <button class="card-add-btn" onclick="event.stopPropagation(); openModal('kinky-straight')">Select Length</button>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- ── CARD 2: Body Wave ── -->
+    <div class="product-card" onclick="openModal('body-wave')">
+      <div class="card-image-wrap">
+        <img src="bodywavemain.jpeg" alt="Soft Luxury: Body Wave Ponytail">
+        <div class="card-overlay"></div>
+        <button class="card-view-btn" tabindex="-1">View Details</button>
+      </div>
+      <div class="card-info">
+        <p class="card-label">Soft Luxury</p>
+        <h3 class="card-name">Body Wave Ponytail</h3>
+        <p class="card-tagline">Effortless movement with natural shine</p>
+        <div class="card-footer">
+          <span class="card-price">€74.99</span>
+          <button class="card-add-btn" onclick="event.stopPropagation(); openModal('body-wave')">Select Length</button>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- ── CARD 3: Kinky Curly ── -->
+    <div class="product-card" onclick="openModal('kinky-curly')">
+      <div class="card-image-wrap">
+        <img src="kinkycurlymain.jpeg" alt="The Muse: Kinky Curly Ponytail">
+        <div class="card-badge gold">Bestseller</div>
+        <div class="card-overlay"></div>
+        <button class="card-view-btn" tabindex="-1">View Details</button>
+      </div>
+      <div class="card-info">
+        <p class="card-label">The Muse</p>
+        <h3 class="card-name">Kinky Curly Ponytail</h3>
+        <p class="card-tagline">Light, fluffy volume for everyday glam</p>
+        <div class="card-footer">
+          <span class="card-price">€74.99</span>
+          <button class="card-add-btn" onclick="event.stopPropagation(); openModal('kinky-curly')">Select Length</button>
+        </div>
+      </div>
+    </div>
+ 
+    <!--
+      ── TO ADD A NEW PRODUCT: copy the block above,
+         change the key in openModal('...'),
+         update src, card-label, card-name, card-tagline.
+         Then add the product data in script.js.
+    -->
+ 
+  </div>
+</section>
+ 
+ 
+<!-- ═══════════════════════════════════════
+     PRODUCT MODAL
+══════════════════════════════════════════ -->
+<div class="modal-overlay" id="productModal" onclick="handleOverlayClick(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+ 
+    <!-- ── Gallery Side ── -->
+    <div class="modal-gallery">
+      <div class="gallery-main" id="galleryMain">
+        <button class="gallery-arrow prev" onclick="shiftGallery(-1)">&#8592;</button>
+        <button class="gallery-arrow next" onclick="shiftGallery(1)">&#8594;</button>
+      </div>
+      <div class="gallery-thumbs" id="galleryThumbs"></div>
+    </div>
+ 
+    <!-- ── Detail Side ── -->
+    <div class="modal-detail">
+      <p class="modal-eyebrow" id="modalEyebrow"></p>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <p class="modal-subtitle" id="modalSubtitle"></p>
+      <p class="modal-desc" id="modalDesc"></p>
+      <ul class="modal-features" id="modalFeatures"></ul>
+ 
+      <div class="modal-divider"></div>
+ 
+      <!-- Length selector — populated by JS from product data -->
+      <div class="modal-lengths-wrap">
+        <p class="modal-lengths-label">Select Length</p>
+        <div class="modal-lengths" id="modalLengths"></div>
+      </div>
+ 
+      <!-- Price row -->
+      <div class="modal-price-row">
+        <span class="modal-price" id="modalPrice"></span>
+        <span class="modal-stock">In Stock</span>
+      </div>
+ 
+      <!-- Shipping & processing info -->
+      <div class="modal-shipping-info">
+        <span class="modal-shipping-line" id="modalShipping"></span>
+        <span class="modal-shipping-line" id="modalProcessing"></span>
+      </div>
+ 
+      <button class="modal-add-btn" id="modalAddBtn">Add to Bag</button>
+      <p class="modal-note">100% Human Hair &nbsp;·&nbsp; Reusable &amp; Long-lasting</p>
+    </div>
+ 
+  </div>
+</div>
+ 
+<!-- Toast -->
+<div class="cart-toast" id="cartToast">✨ Added to Bag</div>
+ 
+    </section>
+
+    <div class="complete-look-section" style="text-align: center; padding: 60px 20px; background: #fafafa; margin-top: 40px;">
+        <h2 style="font-family: 'Cormorant Garamond'; font-size: 2rem; margin-bottom: 10px;">The Perfect Finish</h2>
+        <p style="margin-bottom: 25px; color: #666;">Protect your edges and style your pony with our silk-feel accessories.</p>
+        <a href="accessories.html" class="complete-look-btn" style="display: inline-block; padding: 12px 30px; background: #000; color: #fff; text-decoration: none; font-family: 'Montserrat'; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">Complete the Look</a>
+    </div>
+
+    <footer class="footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <h4>About Ellen Luxe</h4>
+            <p>Premium hair care products and styling solutions for the modern individual.</p>
+        </div>
+
+        <div class="footer-column">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="policy.html">Returns & Policies</a></li>
+                <li><a href="policy.html">FAQ</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>Follow Our Journey</h4>
+            <p>Connect with us for hair inspo and updates.</p>
+            <div class="social-links" style="margin-top: 15px;">
+                <a href="https://www.instagram.com/_ellenluxehairs?igsh=MzlrYnprZzU3bW96&utm_source=qr" target="_blank" style="margin-right: 20px; font-size: 1.5rem; color: #000;">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.tiktok.com/@ellen.luxe.hairs?_r=1&_t=ZN-93VtrnQ5U2A" target="_blank" style="font-size: 1.5rem; color: #000;">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+    <p>&copy; 2026 Ellen Luxe Hairs. All rights reserved.</p>
+    <div class="developer-credit">
+        Made by <span class="glowing-name">Nana Kwame Dickson</span>
+    </div>
+</div>
+</footer>
+
+    <div id="cart-toast" class="cart-toast">
+        <div class="toast-content">
+            <span class="toast-icon">✨</span>
+            <div class="toast-text">
+                <p id="toast-msg">Added to Bag</p>
+                <a href="cart.html">View Bag</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

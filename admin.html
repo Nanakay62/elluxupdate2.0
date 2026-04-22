@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ellen Luxe | Admin HQ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root { --gold: #d4af37; --bg: #f4f7f6; --text: #2d3436; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; }
+        
+        .sidebar { width: 240px; background: #000; color: white; height: 100vh; padding: 30px 20px; position: fixed; }
+        .sidebar h2 { font-weight: 300; letter-spacing: 2px; border-bottom: 1px solid #333; padding-bottom: 20px; }
+
+        .main-content { margin-left: 280px; padding: 40px; width: calc(100% - 320px); }
+        
+        .analytics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .card h3 { font-size: 0.75rem; color: #888; text-transform: uppercase; margin: 0; }
+        .card p { font-size: 1.8rem; font-weight: 600; margin: 10px 0 0; }
+
+        .chart-container { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); height: 300px; }
+
+        .table-container { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; color: #888; font-size: 0.8rem; padding: 15px; border-bottom: 1px solid #eee; }
+        td { padding: 15px; border-bottom: 1px solid #f9f9f9; font-size: 0.9rem; }
+
+        .badge { padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; }
+        .pending { background: #fff3e0; color: #ef6c00; }
+        .shipped { background: #e8f5e9; color: #2e7d32; }
+
+        .action-btn { border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; margin-right: 5px; transition: 0.2s; }
+        .ship-btn { background: #000; color: white; }
+        .ship-btn:hover { background: var(--gold); }
+        .del-btn { background: #fee2e2; color: #dc2626; }
+        .del-btn:hover { background: #fecaca; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>ELLEN LUXE</h2>
+        <p style="color: #666; font-size: 0.8rem;">Admin HQ</p>
+    </div>
+
+    <main class="main-content">
+        <h1>Dashboard Overview</h1>
+        
+        <div class="analytics-grid">
+            <div class="card"><h3>Total Revenue</h3><p id="stat-revenue">$0</p></div>
+            <div class="card"><h3>Active Orders</h3><p id="stat-active">0</p></div>
+            <div class="card"><h3>Avg Order Value</h3><p id="stat-avg">$0</p></div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="salesChart"></canvas>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr><th>Date</th><th>Customer</th><th>Items</th><th>Amount</th><th>Status</th><th>Actions</th></tr>
+                </thead>
+                <tbody id="order-rows"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+    const API_URL = 'http://127.0.0.1:5000/api/admin/orders';
+    let salesChart;
+
+    async function fetchOrders() {
+        try {
+            const res = await fetch(API_URL);
+            if (!res.ok) throw new Error('Server error');
+            const orders = await res.json();
+            renderDashboard(orders);
+            updateChart(orders);
+        } catch (err) {
+            console.error(err);
+            alert("Connection error. Is your server running?");
+        }
+    }
+
+    function renderDashboard(orders) {
+        const tbody = document.getElementById('order-rows');
+        tbody.innerHTML = '';
+        let revenue = 0;
+        let active = 0;
+
+        orders.forEach(order => {
+            const val = parseFloat(order.totalAmount.replace(/[$,]/g, '')) || 0;
+            revenue += val;
+            if(order.status !== 'Shipped') active++;
+
+            tbody.innerHTML += `
+                <tr>
+                    <td>${new Date(order.date).toLocaleDateString()}</td>
+                    <td><strong>${order.customerName}</strong><br><small>${order.email}</small></td>
+                    <td>${order.items}</td>
+                    <td>${order.totalAmount}</td>
+                    <td><span class="badge ${order.status === 'Shipped' ? 'shipped' : 'pending'}">${order.status || 'Pending'}</span></td>
+                    <td>
+                        ${order.status !== 'Shipped' ? `<button onclick="updateStatus('${order._id}')" class="action-btn ship-btn">Mark Shipped</button>` : ''}
+                        <button onclick="deleteOrder('${order._id}')" class="action-btn del-btn">Delete</button>
+                    </td>
+                </tr>`;
+        });
+
+        document.getElementById('stat-revenue').innerText = `$${revenue.toLocaleString()}`;
+        document.getElementById('stat-active').innerText = active;
+        document.getElementById('stat-avg').innerText = `$${(revenue / (orders.length || 1)).toFixed(2)}`;
+    }
+
+    // Analytics: Sales Trend Chart
+    function updateChart(orders) {
+        const ctx = document.getElementById('salesChart').getContext('2d');
+        
+        // Group revenue by date
+        const salesData = {};
+        orders.slice().reverse().forEach(order => {
+            const date = new Date(order.date).toLocaleDateString();
+            const val = parseFloat(order.totalAmount.replace(/[$,]/g, '')) || 0;
+            salesData[date] = (salesData[date] || 0) + val;
+        });
+
+        if(salesChart) salesChart.destroy();
+
+        salesChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Object.keys(salesData),
+                datasets: [{
+                    label: 'Revenue Trend ($)',
+                    data: Object.values(salesData),
+                    borderColor: '#d4af37',
+                    backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    }
+
+    async function updateStatus(id) {
+        await fetch(`${API_URL}/${id}`, { method: 'PATCH' });
+        fetchOrders();
+    }
+
+    async function deleteOrder(id) {
+        if(!confirm("Delete this order?")) return;
+        await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+        fetchOrders();
+    }
+
+    window.onload = fetchOrders;
+    </script>
+</body>
+</html>

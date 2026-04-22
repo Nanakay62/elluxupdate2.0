@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ellen Luxe Hairs - Luxury Hair Care & Styling</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-container">
+            <!-- Logo -->
+            <div class="logo">
+                <a href="index.html">
+                    <img src="ellen-luxe-logo.png" alt="Ellen Luxe Logo">
+                </a>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search products, styles, colors..." id="searchInput">
+                <button class="search-button" id="searchButton">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Navigation -->
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="accessories.html">Accessories</a></li>
+                    <li><a href="sale.html" class="sale-link">Sale</a></li>
+                    <li><a href="policy.html">Policy</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+           
+ <!--Cart Button-->
+            <div class="header-controls">
+                <a href="cart.html" class="cart-anchor">
+                    <div class="cart-icon-wrapper">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <path d="M16 10a4 4 0 0 1-8 0"></path>
+                        </svg>
+                        <span class="cart-counter" id="cartCount">0</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+  <main class="page-content">
+        <div class="promo-ticker">
+            <div class="ticker-content">
+                ✨ LUXURY DEALS: BUY ANY PONYTAIL & GET A SILK SCRUNCHIE FREE! • LIMITED TIME OFFER • ✨
+            </div>
+        </div>
+
+  <section class="products-section">
+    <div class="section-header">
+        <h2 class="section-title">Exclusive Bundle Deals</h2>
+        <p class="section-subtitle">Get the look: Premium Ponytail + Matching Satin Scrunchie</p>
+    </div>
+
+    <div class="products-grid">
+        <div class="product-card">
+            <div class="product-image">
+                <img src="kinky-straight.png" alt="Kinky Straight Bundle">
+                <div class="product-badge sale">Bundle Deal</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">Kinky Straight Bundle</h3>
+                <p class="product-description">Kinky Straight Ponytail + White Satin Scrunchie</p>
+                
+                <div class="product-selection">
+                    <label>Select Length:</label>
+                    <select class="length-selector" onchange="updateButton(this)">
+                        <option value="10">10" (Pre-order)</option>
+                        <option value="12">12" (Pre-order)</option>
+                        <option value="14">14" (Pre-order)</option>
+                        <option value="16">16" (Pre-order)</option>
+                        <option value="18" selected>18" (In Stock)</option>
+                        <option value="20">20" (Pre-order)</option>
+                        <option value="22">22" (Pre-order)</option>
+                        <option value="24">24" (Pre-order)</option>
+                        <option value="26">26" (Pre-order)</option>
+                        <option value="28">28" (Pre-order)</option>
+                        <option value="30">30" (Pre-order)</option>
+                    </select>
+                </div>
+
+                <div class="price-display">
+                    <p style="font-size: 0.85rem; color: #777; margin-bottom: 5px;">
+                        Pony (€85.00) + Scrunchie (<span style="text-decoration: line-through;">€2.50</span> €1.50)
+                    </p>
+                    <span class="product-price" style="font-size: 1.4rem; color: #d4af37; font-weight: bold;">€86.50</span>
+                </div>
+                
+                <div class="product-footer">
+                    <button class="buy-button" onclick="handleAddToCart(this, 'Kinky Straight Bundle', 86.50, false, true)">Add Bundle to Bag</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="kinky-curly.png" alt="Kinky Curly Bundle">
+                <div class="product-badge sale">Bundle Deal</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">Kinky Curly Bundle</h3>
+                <p class="product-description">Kinky Curly Ponytail + Gold Satin Scrunchie</p>
+                
+                <div class="product-selection">
+                    <label>Select Length:</label>
+                    <select class="length-selector" onchange="updateButton(this)">
+                        <option value="10">10" (Pre-order)</option>
+                        <option value="12">12" (Pre-order)</option>
+                        <option value="14">14" (Pre-order)</option>
+                        <option value="16">16" (Pre-order)</option>
+                        <option value="18" selected>18" (In Stock)</option>
+                        <option value="20">20" (Pre-order)</option>
+                        <option value="22">22" (Pre-order)</option>
+                        <option value="24">24" (Pre-order)</option>
+                        <option value="26">26" (Pre-order)</option>
+                        <option value="28">28" (Pre-order)</option>
+                        <option value="30">30" (Pre-order)</option>
+                    </select>
+                </div>
+
+                <div class="price-display">
+                    <p style="font-size: 0.85rem; color: #777; margin-bottom: 5px;">
+                        Pony (€90.00) + Scrunchie (<span style="text-decoration: line-through;">€2.50</span> €1.50)
+                    </p>
+                    <span class="product-price" style="font-size: 1.4rem; color: #d4af37; font-weight: bold;">€91.50</span>
+                </div>
+                
+                <div class="product-footer">
+                    <button class="buy-button" onclick="handleAddToCart(this, 'Kinky Curly Bundle', 91.50, false, true)">Add Bundle to Bag</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <img src="body-wave.png" alt="Body Wave Bundle">
+                <div class="product-badge sale">Bundle Deal</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">Body Wave Bundle</h3>
+                <p class="product-description">Body Wave Ponytail + Pink Satin Scrunchie</p>
+                
+                <div class="product-selection">
+                    <label>Select Length:</label>
+                    <select class="length-selector" onchange="updateButton(this)">
+                        <option value="10">10" (Pre-order)</option>
+                        <option value="12">12" (Pre-order)</option>
+                        <option value="14">14" (Pre-order)</option>
+                        <option value="16">16" (Pre-order)</option>
+                        <option value="18" selected>18" (In Stock)</option>
+                        <option value="20">20" (Pre-order)</option>
+                        <option value="22">22" (Pre-order)</option>
+                        <option value="24">24" (Pre-order)</option>
+                        <option value="26">26" (Pre-order)</option>
+                        <option value="28">28" (Pre-order)</option>
+                        <option value="30">30" (Pre-order)</option>
+                    </select>
+                </div>
+
+                <div class="price-display">
+                    <p style="font-size: 0.85rem; color: #777; margin-bottom: 5px;">
+                        Pony (€80.00) + Scrunchie (<span style="text-decoration: line-through;">€2.50</span> €1.50)
+                    </p>
+                    <span class="product-price" style="font-size: 1.4rem; color: #d4af37; font-weight: bold;">€81.50</span>
+                </div>
+                
+                <div class="product-footer">
+                    <button class="buy-button" onclick="handleAddToCart(this, 'Body Wave Bundle', 81.50, false, true)">Add Bundle to Bag</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    </main>
+
+    <div class="floating-container">
+        <div class="float-item scrunchie-1"></div>
+        <div class="float-item hair-1"></div>
+        <div class="float-item scrunchie-2"></div>
+    </div>
+
+    <div id="promo-toast" class="promo-toast">
+    <div class="toast-content">
+        <span class="sparkle">✨</span>
+        <div class="toast-text">
+            <strong>Promo Applied!</strong>
+            <p>Free Silk Scrunchie included with your Ponytail!</p>
+        </div>
+    </div>
+</div>
+
+    <!-- Footer -->
+   <footer class="footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <h4>About Ellen Luxe</h4>
+            <p>Premium hair care products and styling solutions for the modern individual.</p>
+        </div>
+
+        <div class="footer-column">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="policy.html">Returns & Policies</a></li>
+                <li><a href="policy.html">FAQ</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>Follow Our Journey</h4>
+            <p>Connect with us for hair inspo and updates.</p>
+            <div class="social-links" style="margin-top: 15px;">
+                <a href="https://www.instagram.com/_ellenluxehairs?igsh=MzlrYnprZzU3bW96&utm_source=qr" target="_blank" style="margin-right: 20px; font-size: 1.5rem; color: #000;">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.tiktok.com/@ellen.luxe.hairs?_r=1&_t=ZN-93VtrnQ5U2A" target="_blank" style="font-size: 1.5rem; color: #000;">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+    <p>&copy; 2026 Ellen Luxe Hairs. All rights reserved.</p>
+    <div class="developer-credit">
+        Made by <span class="glowing-name">Nana Kwame Dickson</span>
+    </div>
+</div>
+</footer>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>

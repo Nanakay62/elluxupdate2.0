@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout – Ellen Luxe Hairs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="checkout.css">
+    <script src="https://www.paypal.com/sdk/js?client-id=AfMerxP1h_sXrek7iKBmM97XfViwshSQKbdnD9_a2au5DtGcnHYVcEX3bOBeVEG5esJ43qweL6a56XP4&currency=EUR"></script>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="header">
+    <div class="header-inner">
+        <a href="index.html" class="logo">
+            <img src="ellen-luxe-logo.png" alt="Ellen Luxe Hairs"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+            <span class="logo-fallback" style="display:none">Ellen Luxe</span>
+        </a>
+
+        <div class="steps">
+            <span class="step">Bag</span>
+            <span class="arrow">›</span>
+            <span class="step active">Information</span>
+            <span class="arrow">›</span>
+            <span class="step">Payment</span>
+        </div>
+    </div>
+</header>
+
+<!-- ── PAGE ── -->
+<main class="page">
+
+    <!-- ═══ LEFT / FORM COLUMN ═══ -->
+    <div class="form-col">
+
+        <!-- Contact card -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-header-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="card-title">Contact Information</div>
+                    <div class="section-sub">We'll send your order confirmation here</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="field-group">
+                    <div class="field-wrapper">
+                        <label for="email">Email address *</label>
+                        <input type="email" id="email" placeholder="you@example.com" required autocomplete="email">
+                    </div>
+                    <div class="field-wrapper">
+                        <label for="phone">Phone number *</label>
+                        <input type="tel" id="phone" placeholder="+233 000 000 000" required autocomplete="tel">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shipping card -->
+        <div class="card card-gap">
+            <div class="card-header">
+                <div class="card-header-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="card-title">Shipping Address</div>
+                    <div class="section-sub">Where should we deliver your order?</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="field-group">
+                    <div class="row-2">
+                        <div class="field-wrapper">
+                            <label for="fname">First name *</label>
+                            <input type="text" id="fname" placeholder="Ama" required autocomplete="given-name">
+                        </div>
+                        <div class="field-wrapper">
+                            <label for="lname">Last name *</label>
+                            <input type="text" id="lname" placeholder="Mensah" required autocomplete="family-name">
+                        </div>
+                    </div>
+                    <div class="field-wrapper">
+                        <label for="address">Street address *</label>
+                        <input type="text" id="address" placeholder="123 Cantonments Rd" required autocomplete="street-address">
+                    </div>
+                    <div class="field-wrapper">
+                        <label for="apartment">Apartment / Suite</label>
+                        <input type="text" id="apartment" placeholder="Apt 4B (optional)" class="optional" autocomplete="address-line2">
+                    </div>
+                    <div class="row-2">
+                        <div class="field-wrapper">
+                            <label for="city">City *</label>
+                            <input type="text" id="city" placeholder="Accra" required autocomplete="address-level2">
+                        </div>
+                        <div class="field-wrapper">
+                            <label for="zip">Postal code</label>
+                            <input type="text" id="zip" placeholder="GA-XXX" class="optional" autocomplete="postal-code">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment card -->
+        <div class="card card-gap">
+            <div class="card-header">
+                <div class="card-header-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                        <line x1="1" y1="10" x2="23" y2="10"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="card-title">Payment</div>
+                    <div class="section-sub">All transactions are secure and encrypted</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="paypal-button-container"></div>
+
+                <div class="payment-divider">or</div>
+
+                <button class="pod-btn" onclick="handlePOD()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2"/>
+                        <line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                    Pay on Delivery
+                </button>
+
+                <div class="trust-row">
+                    <div class="trust-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                        Secure checkout
+                    </div>
+                    <div class="trust-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 12 20 22 4 22 4 12"/>
+                            <rect x="2" y="7" width="20" height="5"/>
+                            <line x1="12" y1="22" x2="12" y2="7"/>
+                            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+                            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+                        </svg>
+                        Free shipping
+                    </div>
+                    <div class="trust-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 4 23 10 17 10"/>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                        </svg>
+                        Easy returns
+                    </div>
+                </div>
+
+                <a href="cart.html" class="back-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"/>
+                        <polyline points="12 19 5 12 12 5"/>
+                    </svg>
+                    Return to shopping bag
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ RIGHT / SUMMARY COLUMN ═══ -->
+    <div class="summary-col">
+
+        <!-- Mobile toggle -->
+        <div class="order-toggle" id="orderToggle" onclick="toggleSummary()">
+            <div class="order-toggle-left">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+                Show order summary
+            </div>
+            <div class="toggle-right">
+                <span class="order-toggle-amount" id="toggle-total">€0.00</span>
+                <svg class="toggle-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="summary-panel" id="summaryPanel">
+            <div class="summary-inner" id="checkout-items-list">
+                <!-- Rendered by JS -->
+            </div>
+
+            <div class="promo-notice" id="promo-notice">
+                ✨ <span><strong>Promo Applied:</strong> Free Silk Scrunchie with your Ponytail!</span>
+            </div>
+
+            <hr class="summary-divider">
+
+            <div class="totals">
+                <div class="total-row">
+                    <span class="label">Subtotal</span>
+                    <span class="value" id="subtotal-val">€0.00</span>
+                </div>
+                <div class="total-row">
+                    <span class="label">Shipping</span>
+                    <span class="badge-free">Free</span>
+                </div>
+                <div class="total-row grand">
+                    <span class="label">Total</span>
+                    <span class="value" id="total-val">€0.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+<script src="checkout.js"></script>
+</body>
+
