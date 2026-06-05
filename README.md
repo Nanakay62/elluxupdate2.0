@@ -67,7 +67,7 @@ Product detail pages:
 
 3. **Customize the carousel**:
    - Replace image URLs in the carousel slides
-   - Add your own video files (replace `video-placeholder.mp4`)
+   - Add your own video files in the `videos/` folder (replace `video-placeholder.mp4`)
    - Videos will auto-play when their slide is active
 
 4. **Add products**:
@@ -119,11 +119,11 @@ Copy a carousel slide div and add to the carousel track:
 ## Video Setup
 
 To add videos to the carousel:
-1. Place your video files in the same folder as index.html
+1. Place your video files in the `videos/` folder
 2. Update the video source in the carousel slide:
 ```html
 <video class="carousel-video" loop muted playsinline>
-    <source src="your-video.mp4" type="video/mp4">
+    <source src="videos/your-video.mp4" type="video/mp4">
 </video>
 ```
 

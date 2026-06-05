@@ -109,9 +109,9 @@ const products = {
         price: '€74.99',
         priceNum: 74.99,
         images: [
-            'kinkycurlymain.jpeg',
-            'kinkycurly1.jpeg',
-            'kinkycurlycap.jpeg',
+            'images/kinkycurlymain.jpeg',
+            'images/kinkycurly1.jpeg',
+            'images/kinkycurlycap.jpeg',
         ],
     },
     'kinky-straight': {
@@ -130,10 +130,10 @@ const products = {
         price: '€74.99',
         priceNum: 74.99,
         images: [
-            'kinkystraightmain.jpeg',
-            'kinkystraight1.jpeg',
-            'kinkystraight2.jpeg',
-            'kinkystraightcap.jpeg',
+            'images/kinkystraightmain.jpeg',
+            'images/kinkystraight1.jpeg',
+            'images/kinkystraight2.jpeg',
+            'images/kinkystraightcap.jpeg',
         ],
     },
     'body-wave': {
@@ -152,10 +152,10 @@ const products = {
         price: '€74.99',
         priceNum: 74.99,
         images: [
-            'bodywavemain.jpeg',
-            'bodywave1.jpeg',
-            'bodywave2.jpeg',
-            'bodywavecap.jpeg',
+            'images/bodywavemain.jpeg',
+            'images/bodywave1.jpeg',
+            'images/bodywave2.jpeg',
+            'images/bodywavecap.jpeg',
         ],
     },
 };
