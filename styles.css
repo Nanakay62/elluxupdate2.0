@@ -1292,3 +1292,50 @@ hr { border: 0; border-top: 1px solid #eee; margin: 50px 0; }
 @media (max-width: 480px) {
     .modal-box { max-height: 100vh; }
 }
+
+/* ─────────────────────────────────────────────
+   LENGTH CHIPS  (modal length selector)
+   Add these rules to your styles.css
+───────────────────────────────────────────── */
+
+.modal-lengths-wrap {
+    margin: 16px 0;
+}
+
+.modal-lengths-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.modal-lengths {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.length-chip {
+    padding: 8px 18px;
+    border: 1.5px solid #ccc;
+    background: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+    border-radius: 2px;
+    color: #333;
+}
+
+.length-chip:hover {
+    border-color: #000;
+}
+
+.length-chip.active {
+    border-color: #000;
+    background: #000;
+    color: #fff;
+}

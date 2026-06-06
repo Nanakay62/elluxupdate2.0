@@ -49,38 +49,67 @@ function handleAddToCart(button, name, price, isAccessory = false, isSale = fals
     }, 2000);
 }
 
-// Used by new modal product cards (ponytail section)
-// FIX: now uses getCart()/saveCart() and includes image + length fields
-// so cart page renders correctly
-function addToCartDirect(name, price) {
+// ─────────────────────────────────────────────
+// ADD TO CART  (modal & quick-add)
+// ─────────────────────────────────────────────
+function addToCartDirect(name, price, length) {
+    const lengthLabel = length || "Standard";
     let cart = getCart();
-    const existing = cart.find(i => i.name === name);
+    const existing = cart.find(i => i.name === name && i.length === lengthLabel);
     if (existing) {
         existing.qty += 1;
     } else {
         cart.push({
             name,
             price: parseFloat(price),
-            length: "Standard",
+            length: lengthLabel,
             qty: 1,
-            image: '',          // no single image for modal products
+            image: '',
             isBundle: false
         });
     }
     saveCart(cart);
     updateCartCount();
 
-    // FIX: use the single unified toast (showLuxuryToast)
-    // strip the "The Muse: " prefix for a cleaner message
     const shortName = name.split(':').pop().trim();
-    showLuxuryToast(`${shortName} added to bag!`);
+    showLuxuryToast(`${shortName} (${lengthLabel}) added to bag!`);
+}
+
+// Called by the "Add to Cart" button on product cards
+// Opens a small length-picker popover if the product has multiple lengths,
+// or adds directly if there is only one length.
+function quickAddFromCard(event, key) {
+    event.stopPropagation(); // prevent card click opening modal
+
+    const p = products[key];
+    if (!p) return;
+
+    if (p.lengths.length === 1) {
+        // Only one option — add straight to cart
+        const opt = p.lengths[0];
+        addToCartDirect(`${p.eyebrow}: ${p.title} ${p.titleSuffix}`, opt.price, opt.label);
+        // Visual feedback on the button
+        const btn = event.currentTarget;
+        const orig = btn.innerText;
+        btn.innerText = "Added ✓";
+        btn.style.background = "#d4af37";
+        btn.disabled = true;
+        setTimeout(() => {
+            btn.innerText = orig;
+            btn.style.background = "";
+            btn.disabled = false;
+        }, 2000);
+    } else {
+        // Multiple lengths — open modal so customer can choose
+        openModal(key);
+    }
 }
 
 // ─────────────────────────────────────────────
-// TOAST  (single unified system)
+// TOAST
 // ─────────────────────────────────────────────
 function showLuxuryToast(message) {
-    const toast   = document.getElementById('cart-toast');
+    const toast    = document.getElementById('cart-toast');
     const toastMsg = document.getElementById('toast-msg');
     if (toast && toastMsg) {
         toastMsg.innerText = message;
@@ -90,7 +119,7 @@ function showLuxuryToast(message) {
 }
 
 // ─────────────────────────────────────────────
-// PRODUCT DATA  (modal ponytail cards)
+// PRODUCT DATA
 // ─────────────────────────────────────────────
 const products = {
     'kinky-curly': {
@@ -106,8 +135,10 @@ const products = {
             'Everyday glam — effortless to style',
             '200 density for maximum fullness',
         ],
-        price: '€74.99',
-        priceNum: 74.99,
+        // Single price for this texture
+        lengths: [
+            { label: '18 inches', price: 69.99 },
+        ],
         images: [
             'images/kinkycurlymain.jpeg',
             'images/kinkycurly1.jpeg',
@@ -122,13 +153,15 @@ const products = {
         desc: 'The Muse Kinky Straight delivers the polished, blown-out look you love — smooth, aligned, and seamlessly blending with your natural hair texture. Ready in seconds, lasting all day.',
         features: [
             '100% Human Hair',
-            '18 inches — full, elegant length',
             'Natural blow-out finish',
             'Blends effortlessly with all textures',
             'Reusable and long-lasting',
         ],
-        price: '€74.99',
-        priceNum: 74.99,
+        // Two lengths at different prices
+        lengths: [
+            { label: '10 inches', price: 64.99 },
+            { label: '12 inches', price: 69.99 },
+        ],
         images: [
             'images/kinkystraightmain.jpeg',
             'images/kinkystraight1.jpeg',
@@ -149,8 +182,9 @@ const products = {
             'Ready in seconds',
             'Reusable and long-lasting',
         ],
-        price: '€74.99',
-        priceNum: 74.99,
+        lengths: [
+            { label: '18 inches', price: 69.99 },
+        ],
         images: [
             'images/bodywavemain.jpeg',
             'images/bodywave1.jpeg',
@@ -161,15 +195,17 @@ const products = {
 };
 
 // ─────────────────────────────────────────────
-// MODAL  (all functions at global scope —
-//         so onclick="openModal(...)" in HTML works)
+// MODAL
 // ─────────────────────────────────────────────
-let currentProduct = null;
-let activeIndex    = 0;
+let currentProduct  = null;
+let activeIndex     = 0;
+let selectedLengthIndex = 0;
 
 function openModal(key) {
     currentProduct = key;
     activeIndex    = 0;
+    selectedLengthIndex = 0;
+
     const p = products[key];
     if (!p) return;
 
@@ -181,9 +217,17 @@ function openModal(key) {
     const ul = document.getElementById('modalFeatures');
     ul.innerHTML = p.features.map(f => `<li>${f}</li>`).join('');
 
-    document.getElementById('modalPrice').textContent = p.price;
-    document.getElementById('modalAddBtn').onclick =
-        () => addToCartDirect(`${p.eyebrow}: ${p.title} ${p.titleSuffix}`, p.priceNum);
+    // Build length selector chips
+    buildLengthOptions(p);
+
+    // Set initial price
+    updateModalPrice(p, 0);
+
+    // Wire up Add to Bag
+    document.getElementById('modalAddBtn').onclick = () => {
+        const opt = p.lengths[selectedLengthIndex];
+        addToCartDirect(`${p.eyebrow}: ${p.title} ${p.titleSuffix}`, opt.price, opt.label);
+    };
 
     buildGallery(p.images);
 
@@ -191,11 +235,36 @@ function openModal(key) {
     document.body.style.overflow = 'hidden';
 }
 
+function buildLengthOptions(p) {
+    const container = document.getElementById('modalLengths');
+    if (!container) return;
+    container.innerHTML = '';
+
+    p.lengths.forEach((opt, i) => {
+        const chip = document.createElement('button');
+        chip.className = 'length-chip' + (i === 0 ? ' active' : '');
+        chip.textContent = opt.label;
+        chip.addEventListener('click', () => {
+            container.querySelectorAll('.length-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            selectedLengthIndex = i;
+            updateModalPrice(p, i);
+        });
+        container.appendChild(chip);
+    });
+}
+
+function updateModalPrice(p, index) {
+    const priceEl = document.getElementById('modalPrice');
+    if (priceEl) {
+        priceEl.textContent = `€${p.lengths[index].price.toFixed(2)}`;
+    }
+}
+
 function buildGallery(images) {
     const main   = document.getElementById('galleryMain');
     const thumbs = document.getElementById('galleryThumbs');
 
-    // Remove previous images (leave arrow buttons intact)
     main.querySelectorAll('img').forEach(el => el.remove());
     thumbs.innerHTML = '';
 
@@ -261,13 +330,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ── Search ──
-    // FIX: query both .card-name (new cards) and .product-name (old cards)
     const searchBtn = document.getElementById('searchButton');
     if (searchBtn) {
         searchBtn.addEventListener('click', () => {
             const term = document.getElementById('searchInput').value.toLowerCase().trim();
             document.querySelectorAll('.product-card').forEach(card => {
-                // support both old (.product-name) and new (.card-name) card structures
                 const nameEl = card.querySelector('.card-name') || card.querySelector('.product-name');
                 const title  = nameEl ? nameEl.innerText.toLowerCase() : '';
                 card.style.display = (!term || title.includes(term)) ? '' : 'none';
@@ -295,7 +362,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let timer    = null;
         const AUTO_DELAY = 5500;
 
-        // Build dots
         slides.forEach((_, i) => {
             const dot = document.createElement('button');
             dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
@@ -313,7 +379,6 @@ document.addEventListener('DOMContentLoaded', () => {
             track.style.transform = `translateX(-${current * 100}%)`;
             getDots().forEach((d, i) => d.classList.toggle('active', i === current));
 
-            // Play/pause video as it enters/leaves view
             slides.forEach((slide, i) => {
                 const vid = slide.querySelector('video');
                 if (!vid) return;
@@ -330,7 +395,6 @@ document.addEventListener('DOMContentLoaded', () => {
         prevBtn.addEventListener('click', () => goTo(current - 1));
         nextBtn.addEventListener('click', () => goTo(current + 1));
 
-        // Touch / swipe
         let touchStartX = 0;
         track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
         track.addEventListener('touchend',   e => {
@@ -338,12 +402,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
         }, { passive: true });
 
-        // Pause on hover
         const container = track.closest('.carousel-container') || track.parentElement;
         container.addEventListener('mouseenter', () => clearInterval(timer));
         container.addEventListener('mouseleave', startTimer);
 
         goTo(0);
-    })(); // ← IIFE properly closed here
+    })();
 
-}); // ← DOMContentLoaded closed here
+});

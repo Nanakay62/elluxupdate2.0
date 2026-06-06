@@ -156,8 +156,9 @@
         <h3 class="card-name">Kinky Straight Ponytail</h3>
         <p class="card-tagline">Soft, natural blow-out finish that blends effortlessly</p>
         <div class="card-footer">
-          <span class="card-price">€74.99</span>
-          <button class="card-add-btn" onclick="event.stopPropagation(); openModal('kinky-straight')">Select Length</button>
+          <span class="card-price">From €64.99</span>
+          <!-- 2 lengths → opens modal to pick -->
+          <button class="card-add-btn" onclick="quickAddFromCard(event, 'kinky-straight')">Add to Cart</button>
         </div>
       </div>
     </div>
@@ -174,8 +175,9 @@
         <h3 class="card-name">Body Wave Ponytail</h3>
         <p class="card-tagline">Effortless movement with natural shine</p>
         <div class="card-footer">
-          <span class="card-price">€74.99</span>
-          <button class="card-add-btn" onclick="event.stopPropagation(); openModal('body-wave')">Select Length</button>
+          <span class="card-price">€69.99</span>
+          <!-- 1 length → adds directly to cart -->
+          <button class="card-add-btn" onclick="quickAddFromCard(event, 'body-wave')">Add to Cart</button>
         </div>
       </div>
     </div>
@@ -193,18 +195,12 @@
         <h3 class="card-name">Kinky Curly Ponytail</h3>
         <p class="card-tagline">Light, fluffy volume for everyday glam</p>
         <div class="card-footer">
-          <span class="card-price">€74.99</span>
-          <button class="card-add-btn" onclick="event.stopPropagation(); openModal('kinky-curly')">Select Length</button>
+          <span class="card-price">€69.99</span>
+          <!-- 1 length → adds directly to cart -->
+          <button class="card-add-btn" onclick="quickAddFromCard(event, 'kinky-curly')">Add to Cart</button>
         </div>
       </div>
     </div>
- 
-    <!--
-      ── TO ADD A NEW PRODUCT: copy the block above,
-         change the key in openModal('...'),
-         update src, card-label, card-name, card-tagline.
-         Then add the product data in script.js.
-    -->
  
   </div>
 </section>
