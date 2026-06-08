@@ -6,8 +6,8 @@
 const CART_KEY = 'ellenLuxeCart';
 
 /* ── helpers ── */
-function getCart()       { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
-function saveCart(cart)  { localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
+function getCart()      { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+function saveCart(cart) { localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
 
 /* ── qty change ── */
 window.changeQty = function (index, delta) {
@@ -43,14 +43,15 @@ window.goToCheckout = function () {
 
 /* ── main render ── */
 function renderCart() {
-    const cart         = getCart();
-    const container    = document.getElementById('cartItems');
-    const subtotalEl   = document.getElementById('cartTotal');
-    const totalEl      = document.getElementById('cartFinalTotal');
-    const badge        = document.getElementById('cartCount');
-    const colHeaders   = document.getElementById('colHeaders');
-    const promoStrip   = document.getElementById('promoStrip');
-    const countLabel   = document.getElementById('itemCountLabel');
+    const cart       = getCart();
+    const container  = document.getElementById('cartItems');
+    const subtotalEl = document.getElementById('cartTotal');
+    const totalEl    = document.getElementById('cartFinalTotal');
+    const badge      = document.getElementById('cartCount');
+    const colHeaders = document.getElementById('colHeaders');
+    const promoStrip = document.getElementById('promoStrip');
+    const countLabel = document.getElementById('itemCountLabel');
+    const summaryCard = document.getElementById('summaryCard');
 
     if (!container) return;
 
@@ -75,11 +76,13 @@ function renderCart() {
         if (colHeaders)  colHeaders.style.display = 'none';
         if (promoStrip)  promoStrip.classList.remove('visible');
         if (countLabel)  countLabel.textContent   = '';
+        if (summaryCard) summaryCard.style.display = 'none';  // hide when empty
         return;
     }
 
-    /* ── Show column headers on desktop ── */
-    if (colHeaders) colHeaders.style.display = '';
+    /* ── Restore summary card & column headers when cart has items ── */
+    if (summaryCard) summaryCard.style.display = '';
+    if (colHeaders)  colHeaders.style.display  = '';
 
     /* ── Build rows ── */
     let subtotal    = 0;
@@ -94,22 +97,34 @@ function renderCart() {
 
         if (item.name.toLowerCase().includes('ponytail')) hasPonytail = true;
 
+        // Length display: item.length is now a full string e.g. "10 inches"
+        const lengthDisplay = (item.length && item.length !== 'Standard')
+            ? item.length
+            : 'One Size';
+
+        // Thumbnail: use stored image if available, else brand-appropriate bag icon
+        const thumbHTML = item.image
+            ? `<img src="${item.image}" alt="${item.name}">`
+            : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                   <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+                   <line x1="3" y1="6" x2="21" y2="6"/>
+                   <path d="M16 10a4 4 0 0 1-8 0"/>
+               </svg>`;
+
         return `
         <div class="cart-item-row">
+
             <!-- Thumbnail -->
             <div class="cart-item-thumb">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2"
-                     stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
-                    <path d="M8 12h8M12 8v8"/>
-                </svg>
+                ${thumbHTML}
             </div>
 
             <!-- Name + meta -->
             <div class="item-info">
                 <span class="item-name">${item.name}</span>
                 <span class="item-meta">
-                    ${item.length ? item.length + '" Length' : 'One Size'}
+                    ${lengthDisplay}
                     &nbsp;·&nbsp; €${item.price.toFixed(2)} each
                 </span>
             </div>
@@ -139,10 +154,11 @@ function renderCart() {
                     <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
                 </svg>
             </button>
+
         </div>`;
     }).join('');
 
-    /* ── Promo ── */
+    /* ── Promo strip (free scrunchie with ponytail) ── */
     if (promoStrip) {
         hasPonytail
             ? promoStrip.classList.add('visible')
