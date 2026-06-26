@@ -15,51 +15,58 @@
     <!-- ═══════════════════════════════════════
          HEADER
     ══════════════════════════════════════════ -->
-    <header class="header">
-        <div class="header-container">
-            <div class="logo">
-                <a href="index.html">
-                    <img src="images/ellen-luxe-logo.png" alt="Ellen Luxe Logo">
-                </a>
-            </div>
-
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="Search products, styles, colors..." id="searchInput">
-                <button class="search-button" id="searchButton">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.35-4.35"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <nav class="main-nav">
-                <ul class="nav-list">
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="accessories.html">Accessories</a></li>
-                    <li><a href="sale.html" class="sale-link">Sale</a></li>
-                    <li><a href="policy.html">Policy</a></li>
-                    <li><a href="about.html">About</a></li>
-                </ul>
-            </nav>
-
-            <div class="header-controls">
-                <a href="cart.html" class="cart-anchor">
-                    <div class="cart-icon-wrapper">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
-                            <line x1="3" y1="6" x2="21" y2="6"></line>
-                            <path d="M16 10a4 4 0 0 1-8 0"></path>
-                        </svg>
-                        <span class="cart-counter" id="cartCount">0</span>
-                    </div>
-                </a>
-                <button class="mobile-menu-toggle" id="mobileMenuToggle">
-                    <span></span><span></span><span></span>
-                </button>
-            </div>
+  <header class="header">
+    <div class="header-container">
+        <!-- Logo -->
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/ellen-luxe-logo.png" alt="Ellen Luxe Logo">
+            </a>
         </div>
-    </header>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search products, styles, colors..." id="searchInput">
+            <button class="search-button" id="searchButton">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <ul class="nav-list">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="accessories.html">Accessories</a></li>
+                <li><a href="sale.html" class="sale-link">Sale</a></li>
+                <li><a href="policy.html">Policy</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+
+        <!-- Cart + Mobile Toggle — both inside header-container -->
+        <div class="header-controls">
+            <a href="cart.html" class="cart-anchor">
+                <div class="cart-icon-wrapper">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span class="cart-counter" id="cartCount">0</span>
+                </div>
+            </a>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+    </div><!-- /.header-container -->
+</header>
 
     <!-- ═══════════════════════════════════════
          HERO CAROUSEL

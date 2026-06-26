@@ -1339,3 +1339,52 @@ hr { border: 0; border-top: 1px solid #eee; margin: 50px 0; }
     background: #000;
     color: #fff;
 }
+
+/* Launch Promo Banner */
+.launch-promo-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border: 1px solid #d4af37;
+    border-radius: 10px;
+    padding: 14px 24px;
+    margin: 0 auto 32px auto;
+    max-width: 860px;
+    text-align: center;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.2);
+}
+
+.launch-promo-banner .launch-icon {
+    font-size: 1.3rem;
+}
+
+.launch-promo-banner .promo-code {
+    background: #d4af37;
+    color: #000;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+}
+
+.launch-promo-banner .launch-stock {
+    color: #d4af37;
+    font-weight: 600;
+    font-size: 0.82rem;
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    .launch-promo-banner {
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px 16px;
+    }
+}
