@@ -180,11 +180,6 @@ async function processOrder(method, transactionId = 'N/A') {
     }
 }
 
-/* ── PAY ON DELIVERY ── */
-window.handlePOD = function () {
-    if (!validateFields()) { alert('Please fill in all required fields.'); return; }
-    if (confirm('Confirm your order for Pay on Delivery?')) processOrder('Pay on Delivery');
-};
 
 /* ── PAYPAL ── */
 paypal.Buttons({
